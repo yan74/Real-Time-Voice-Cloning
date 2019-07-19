@@ -1,3 +1,8 @@
+audible_datasets = {
+    "train": {
+        "audible": ["encoder/audible"]
+    }
+}
 librispeech_datasets = {
     "train": {
         "clean": ["LibriSpeech/train-clean-100", "LibriSpeech/train-clean-360"],

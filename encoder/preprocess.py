@@ -1,6 +1,6 @@
 from multiprocess.pool import ThreadPool
 from encoder.params_data import *
-from encoder.config import librispeech_datasets, anglophone_nationalites
+from encoder.config import librispeech_datasets, anglophone_nationalites, audible_datasets
 from datetime import datetime
 from encoder import audio
 from pathlib import Path
@@ -126,6 +126,19 @@ def preprocess_librispeech(datasets_root: Path, out_dir: Path, skip_existing=Fal
             return 
         
         # Preprocess all speakers
+        speaker_dirs = list(dataset_root.glob("*"))
+        _preprocess_speaker_dirs(speaker_dirs, dataset_name, datasets_root, out_dir, "flac",
+                                 skip_existing, logger)
+
+
+def preprocess_audible(datasets_root: Path, out_dir: Path, skip_existing=False):
+    for dataset_name in audible_datasets["train"]["audible"]:
+        # Initialize the preprocessing
+        dataset_root, logger = _init_preprocess_dataset(dataset_name, datasets_root, out_dir)
+        if not dataset_root:
+            return
+
+            # Preprocess all speakers
         speaker_dirs = list(dataset_root.glob("*"))
         _preprocess_speaker_dirs(speaker_dirs, dataset_name, datasets_root, out_dir, "flac",
                                  skip_existing, logger)
